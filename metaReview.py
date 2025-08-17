@@ -1,25 +1,16 @@
 import os
 import platform
 
-text = "Le TRISTE Constat"
-deck1 = "UR Wizard Painter" 
-deck2 = "UB Reanimator"
-
 format = "Legacy"
+text = "Ce Match Up n'existe pas"
+deck1 = "Mono Black Aggro" 
+deck2 = "Jund Nic Fit"
 
-youtuberName = "BoshNRoll"
-videoLink = "https://www.youtube.com/watch?v=wY4_hOTpH3c"
-channelLink = "https://www.youtube.com/@BoshNRoll"
+youtuberName = "BeExcellent"
+videoLink = "https://www.youtube.com/watch?v=54sD5qL9h84"
+channelLink = "https://www.youtube.com/@BeExcellent80s"
 
-Title = f"{text} - {deck1} vs {deck2} - League Review"
-
-
-
-
-
-
-
-
+Title = f"{text} - {deck1} vs {deck2} - {format} League Review"
 
 
 
