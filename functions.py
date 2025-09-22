@@ -1,48 +1,80 @@
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageFilter
 import os
 import requests
 from io import BytesIO
 import urllib.parse
+
+
+
+def load_png_reaction(reaction_filename, border_size=11, img_width=800, img_height=800, reaction_dir="reactions"):
+    os.makedirs(reaction_dir, exist_ok=True)
+
+    file_path = os.path.join(reaction_dir, reaction_filename)
+
+    if os.path.exists(file_path):
+        print(f"Loading cached image: {file_path}")
+        image = Image.open(file_path).convert("RGBA")
+
+        # Extract alpha channel
+        alpha = image.split()[3]
+
+        # Create a binary mask: white where visible, black where transparent
+        mask = alpha.point(lambda p: 255 if p > 0 else 0)
+
+        # Slightly blur the alpha mask and then convert to border
+        border_width = 10
+        border_mask = mask.filter(ImageFilter.MaxFilter(border_size))
+
+        border_color = (0, 0, 0, 255)
+        border_image = Image.new("RGBA", image.size, (0,0,0,0))
+        border_image.paste(border_color, mask=border_mask)
+
+        final_image = Image.alpha_composite(border_image, image)
+
+        return final_image
+        # final_image.save("reaction_with_border.png")
+    else:
+        print("Reaction Filename not found !")
 
 # FUNCTIONS
 def load_png_cached(url, cache_dir="cache", filename=None):
     """
     Downloads a PNG from a URL and stores it in a cache folder.
     If the file already exists, it loads it from disk instead.
-    
+
     Parameters:
         url (str): The URL of the PNG image.
         cache_dir (str): Folder to store cached images.
-        filename (str): Optional filename to save the image as. 
+        filename (str): Optional filename to save the image as.
                         If None, it will use the last part of the URL.
-                        
+
     Returns:
         PIL.Image.Image: The image in RGBA mode.
     """
     # Ensure the cache folder exists
     os.makedirs(cache_dir, exist_ok=True)
-    
+
     # Determine filename
     if filename is None:
         filename = os.path.basename(url.split("?")[0])  # strip URL params
-    
+
     file_path = os.path.join(cache_dir, filename)
-    
+
     # If file already exists, load from disk
     if os.path.exists(file_path):
         print(f"Loading cached image: {file_path}")
         return Image.open(file_path).convert("RGBA")
-    
+
     # Download the image
     print(f"Downloading image from: {url}")
     response = requests.get(url)
     response.raise_for_status()
     img_data = BytesIO(response.content)
-    
+
     # Save to disk
     with open(file_path, "wb") as f:
         f.write(img_data.getbuffer())
-    
+
     # Load as RGBA
     img = Image.open(file_path).convert("RGBA")
     return img
@@ -82,7 +114,7 @@ def add_rounded_border(img, border_size=10, border_color=(0,0,0), radius=20):
     new_w = img.width + 2 * border_size
     new_h = img.height + 2 * border_size
     bordered_img = Image.new("RGBA", (new_w, new_h), (0,0,0,0))
-    
+
     # Draw rounded rectangle as the border
     draw = ImageDraw.Draw(bordered_img)
     draw.rounded_rectangle(
@@ -90,10 +122,10 @@ def add_rounded_border(img, border_size=10, border_color=(0,0,0), radius=20):
         radius = radius + border_size,
         fill = border_color + (255,)
     )
-    
+
     # Paste the original image on top, centered
     bordered_img.paste(img, (border_size, border_size), mask=img)
-    
+
     return bordered_img
 
 
@@ -118,7 +150,7 @@ def crop_height_centered(img, height):
 def drawTitleWidthCentered(img, title, font_name, font_size, y=20):
     draw = ImageDraw.Draw(img)
 
-    font_path = "C:/Windows/Fonts/" + font_name + ".ttf"  # Adjust for your system
+    font_path = "fonts/" + font_name + ".ttf"  # Adjust for your system
     font = ImageFont.truetype(font_path, font_size)
 
     # define the text
@@ -187,10 +219,10 @@ def paste_circle_image(base_img, img_to_add, position, size):
     # Ensure RGBA mode for transparency
     base_img = base_img.convert("RGBA")
     img_to_add = img_to_add.convert("RGBA")
-    
+
     # Resize to desired size
     img_to_add = img_to_add.resize((size, size), Image.LANCZOS)
-    
+
     # Create same size mask
     mask = Image.new("L", (size, size), 0)
     draw = ImageDraw.Draw(mask)
@@ -214,7 +246,7 @@ def fetch_avatar_from_video(video_url, api_key, cache_dir="cache"):
     video_id = extract_video_id(video_url)
     if not video_id:
         raise ValueError("Invalid YouTube URL")
-    
+
     # Get channel ID via videos.list
     videos_api = (
         "https://www.googleapis.com/youtube/v3/videos"
