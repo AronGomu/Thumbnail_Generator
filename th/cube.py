@@ -1,7 +1,4 @@
-from PIL import Image, ImageDraw, ImageFont, ImageOps
-import os
-
-import functions
+import utils
 
 # VARIABLE METADATA
 
@@ -13,17 +10,17 @@ bg_url = "https://cards.scryfall.io/art_crop/front/e/b/eb6d8d1c-8d23-4273-9c9b-f
 
 
 
-bg = functions.load_png_cached(bg_url)
+bg = utils.load_png_cached(bg_url)
 
-bg_resized, new_height = functions.resizeOnlyWidth(bg, 1280)
-bg_resized_cropped = functions.crop_height_centered(bg_resized, 720)
+bg_resized, new_height = utils.resizeOnlyWidth(bg, 1280)
+bg_resized_cropped = utils.crop_height_centered(bg_resized, 720)
 
 
 
 cw = 500
 
 
-functions.drawTitleWidthCentered(bg_resized_cropped, title, "impact", title_size, y=80)
+utils.drawTitleWidthCentered(bg_resized_cropped, title, "impact", title_size, y=80)
 
 
 
