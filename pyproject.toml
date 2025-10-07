@@ -1,0 +1,19 @@
+[project]
+name = "mtgones"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "AronGomu"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pillow (>=11.3.0,<12.0.0)",
+    "requests (>=2.32.3,<3.0.0)"
+]
+package-mode = false
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

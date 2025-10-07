@@ -195,13 +195,26 @@ def drawText(img, text, font_name, font_size, x=20, y=20):
         stroke_fill=stroke_color
     )
 
-def addCard(base, card, height, x, y, border_size=4, radius=12):
+def add_card(base, card, height, x, y, border_size=4, radius=12):
     card_resized, new_width = resizeOnlyHeight(card, height)
     card_resized_bordered = add_rounded_border(card_resized, border_size, (255,255,255), radius)
     base.paste(card_resized_bordered, (x, y), card_resized_bordered)
     return base
 
-from PIL import Image, ImageDraw
+def addCard(base, card, height, x, y, border_size=4, radius=12, rotate_angle=0):
+    # 1. Apply Rotation (New Step)
+    if rotate_angle != 0:
+        # Expand=True ensures the entire rotated image fits on the canvas
+        card = card.rotate(rotate_angle, expand=True)
+
+    # Remaining original steps
+    card_resized, new_width = resizeOnlyHeight(card, height)
+    card_resized_bordered = add_rounded_border(card_resized, border_size, (255, 255, 255), radius)
+    base.paste(card_resized_bordered, (x, y), card_resized_bordered)
+    return base
+
+
+
 
 def paste_circle_image(base_img, img_to_add, position, size):
     """
