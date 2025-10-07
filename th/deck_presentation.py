@@ -12,7 +12,14 @@ img = utils.create_radial_gradient_background(
     width=1280,
     height=720,
     color_center=colors.GRAY_DARK,
-    color_edge=colors.GRAY_LIGHT
+    color_edge=colors.BLUE_DARK
+)
+
+img = utils.create_gradient_background(
+    width=1280,
+    height=720,
+    color_start=colors.GRAY_DARK,
+    color_end=colors.BLUE_DARK
 )
 
 # ADDING cards
@@ -24,7 +31,7 @@ img = utils.add_card(img, center_card, 700, center_x, center_y+100, border_size=
 
 
 # ADD TITLE
-img = utils.drawTitleWidthCentered(img, title, "Planewalker-38m6", 120, y=80)
+img = utils.drawTitleWidthCentered(img, title, "Goudy_Mediaeval_DemiBold", 120, y=80)
 
 
 ## RESULT

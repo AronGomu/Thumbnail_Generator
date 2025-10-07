@@ -1,3 +1,4 @@
+import random
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageFilter
 import math
 import os
@@ -304,9 +305,9 @@ def fetch_avatar_from_video(video_url, api_key, cache_dir="cache"):
     return load_png_cached(avatar_url, cache_dir, filename=f"{channel_id}.png")
 
 
-def create_gradient_background(width, height, color_start, color_end, direction='vertical'):
+def create_gradient_background(width, height, color_start, color_end, direction='horizontal', noise_intensity=0, noise_density=0):
     """
-    Creates a linear gradient background image in RGBA mode.
+    Creates a linear gradient background image in RGBA mode with subtle noise applied.
 
     Parameters:
         width (int): The width of the gradient image.
@@ -314,12 +315,13 @@ def create_gradient_background(width, height, color_start, color_end, direction=
         color_start (tuple): RGB color for the start (e.g., (255, 0, 0) for red).
         color_end (tuple): RGB color for the end (e.g., (0, 0, 255) for blue).
         direction (str): 'vertical' or 'horizontal'.
+        noise_intensity (int): Maximum deviation for color adjustment (0-255).
+        noise_density (float): Probability (0.0 to 1.0) that a pixel receives noise.
 
     Returns:
         PIL.Image.Image: The generated gradient image in RGBA mode.
     """
-    # CORRECTED: Use 'RGBA' mode. Starting color is opaque (alpha=255).
-    # Note: color_start must be extended to (R, G, B, A) if using Image.new's fill argument.
+    # Use 'RGBA' mode. Starting color is opaque (alpha=255).
     img = Image.new('RGBA', (width, height), color_start + (255,))
     draw = ImageDraw.Draw(img)
 
@@ -333,12 +335,19 @@ def create_gradient_background(width, height, color_start, color_end, direction=
             # Calculate the interpolation factor (0.0 at top, 1.0 at bottom)
             factor = y / height
             
-            # Interpolate the RGB values
+            # Interpolate the base RGB values
             r = int(color_start[0] + delta_r * factor)
             g = int(color_start[1] + delta_g * factor)
             b = int(color_start[2] + delta_b * factor)
             
-            # CORRECTED: Draw a 1-pixel high line across the image with opaque alpha (255)
+            # Add Subtle Noise/Nuance
+            if random.random() < noise_density:
+                noise = random.randint(-noise_intensity, noise_intensity)
+                r = max(0, min(255, r + noise))
+                g = max(0, min(255, g + noise))
+                b = max(0, min(255, b + noise))
+
+            # Draw a 1-pixel high line across the image with opaque alpha (255)
             draw.line([(0, y), (width, y)], fill=(r, g, b, 255))
             
     elif direction == 'horizontal':
@@ -346,19 +355,42 @@ def create_gradient_background(width, height, color_start, color_end, direction=
         for x in range(width):
             factor = x / width
             
+            # Interpolate the base RGB values
             r = int(color_start[0] + delta_r * factor)
             g = int(color_start[1] + delta_g * factor)
             b = int(color_start[2] + delta_b * factor)
             
+            # Add Subtle Noise/Nuance
+            if random.random() < noise_density:
+                noise = random.randint(-noise_intensity, noise_intensity)
+                r = max(0, min(255, r + noise))
+                g = max(0, min(255, g + noise))
+                b = max(0, min(255, b + noise))
+
             # Draw a 1-pixel wide line down the image with opaque alpha (255)
             draw.line([(x, 0), (x, height)], fill=(r, g, b, 255))
 
     return img
 
-def create_radial_gradient_background(width, height, color_center, color_edge):
-    # CORRECTED: Use 'RGBA' mode for transparency support
+def create_radial_gradient_background(width, height, color_center, color_edge, noise_intensity=0, noise_density=0):
+    """
+    Creates a radial gradient background in RGBA mode and applies a subtle
+    random noise texture for added nuance, mimicking card frame material.
+
+    Parameters:
+        width (int): The width of the gradient image.
+        height (int): The height of the gradient image.
+        color_center (tuple): RGB color for the center.
+        color_edge (tuple): RGB color for the edge.
+        noise_intensity (int): Maximum deviation for color adjustment (0-255).
+        noise_density (float): Probability (0.0 to 1.0) that a pixel receives noise.
+
+    Returns:
+        PIL.Image.Image: The generated gradient image with texture in RGBA mode.
+    """
+    # Use 'RGBA' mode for transparency support
     img = Image.new('RGBA', (width, height)) 
-    pixels = img.load() # Get pixel access
+    pixels = img.load() 
 
     center_x, center_y = width / 2, height / 2
     max_distance = math.sqrt((width/2)**2 + (height/2)**2)
@@ -369,16 +401,27 @@ def create_radial_gradient_background(width, height, color_center, color_edge):
 
     for y in range(height):
         for x in range(width):
+            # 1. Gradient Calculation
             distance = math.sqrt((x - center_x)**2 + (y - center_y)**2)
             factor = min(1.0, distance / max_distance)
             
-            # Interpolate the RGB values
+            # Interpolate the base RGB values
             r = int(color_center[0] + delta_r * factor)
             g = int(color_center[1] + delta_g * factor)
             b = int(color_center[2] + delta_b * factor)
             
-            # CORRECTED: Set the pixel color to (R, G, B, 255)
-            # The alpha value of 255 ensures the background is opaque but ready for RGBA layers.
+            # 2. Add Subtle Noise/Nuance
+            if random.random() < noise_density:
+                # Generate a random offset (delta) based on intensity
+                noise = random.randint(-noise_intensity, noise_intensity)
+                
+                # Apply noise, clamping values between 0 and 255
+                r = max(0, min(255, r + noise))
+                g = max(0, min(255, g + noise))
+                b = max(0, min(255, b + noise))
+
+            # 3. Final Pixel Assignment
+            # Set the pixel color to (R, G, B, 255) - full alpha
             pixels[x, y] = (r, g, b, 255) 
             
     return img
