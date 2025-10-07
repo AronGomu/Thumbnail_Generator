@@ -22,16 +22,21 @@ img = utils.create_gradient_background(
     color_end=colors.BLUE_DARK
 )
 
-# ADDING cards
-center_x, center_y = utils.get_center_image_position(img.width, img.height, 475, 600)
+img = utils.load_img("bg/blue_black.jpg")
+img = utils.resize_and_crop_to_fit(img, 1280, 720)
 
-img = utils.add_card(img, left_card, 700, center_x-250, center_y+100, border_size=0, radius=0, rotate_angle=15)
-img = utils.add_card(img, right_card, 700, center_x+250, center_y+100, border_size=0, radius=0, rotate_angle=-15)
-img = utils.add_card(img, center_card, 700, center_x, center_y+100, border_size=0, radius=0, rotate_angle=0)
+# ADDING cards
+center_x, center_y = utils.get_center_image_position(img.width, img.height, 619, 750)
+
+img = utils.add_card(img, left_card, 750, center_x-350, center_y+150, border_size=0, radius=0, rotate_angle=15)
+img = utils.add_card(img, right_card, 750, center_x+350, center_y+150, border_size=0, radius=0, rotate_angle=-15)
+# img = utils.add_card(img, center_card, 750, center_x, center_y+150, border_size=0, radius=0, rotate_angle=0)
+# tamiyo specific
+img = utils.add_card(img, center_card, 750, center_x+50, center_y+150, border_size=0, radius=0, rotate_angle=0)
 
 
 # ADD TITLE
-img = utils.drawTitleWidthCentered(img, title, "Goudy_Mediaeval_DemiBold", 120, y=80)
+img = utils.drawTitleWidthCentered(img, title, "Goudy_Mediaeval_DemiBold", 120, y=20)
 
 
 ## RESULT

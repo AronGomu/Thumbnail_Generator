@@ -67,6 +67,13 @@ def load_png_cached(url, cache_dir="cache", filename=None):
     img = Image.open(file_path).convert("RGBA")
     return img
 
+def load_img(file_path: str):
+    if os.path.exists(file_path):
+        print(f"Loading cached image: {file_path}")
+        return Image.open(file_path).convert("RGBA")
+    else: print("ERROR : BG NOT LOADED", file_path)
+    
+
 
 
 def add_border(img, border_size=10, border_color=(0, 0, 0)):
@@ -148,6 +155,58 @@ def crop_height_centered(img, height):
         return img.crop((0, top, img.width, bottom))
     else:
         return img
+    
+def resize_and_crop_to_fit(img, target_width, target_height):
+    """
+    Resizes an image to cover the target dimensions completely (using the
+    shortest side logic) and then centrally crops the excess to achieve 
+    the exact final width and height.
+
+    Parameters:
+        img (PIL.Image.Image): The input image.
+        target_width (int): The final desired width.
+        target_height (int): The final desired height.
+
+    Returns:
+        PIL.Image.Image: The resized and cropped image (RGBA mode).
+    """
+    img = img.convert("RGBA")
+
+    # 1. Calculate ratios
+    target_ratio = target_width / target_height
+    img_ratio = img.width / img.height
+
+    # 2. Determine the resizing factor (matching the shortest side to the target)
+    if img_ratio > target_ratio:
+        # Image is wider than the target frame: match height first
+        # new_width will be greater than target_width
+        new_height = target_height
+        new_width = round(new_height * img_ratio)
+    else:
+        # Image is taller than the target frame: match width first
+        # new_height will be greater than target_height
+        new_width = target_width
+        new_height = round(new_width / img_ratio)
+        
+    # Resize the image using the calculated dimensions
+    resized_img = img.resize((new_width, new_height), Image.LANCZOS)
+
+    # 3. Calculate crop box coordinates (to center the image)
+    
+    # Calculate the amount of excess pixels on each side
+    x_excess = new_width - target_width
+    y_excess = new_height - target_height
+
+    # Calculate the crop box coordinates (left, top, right, bottom)
+    left = x_excess // 2
+    top = y_excess // 2
+    right = left + target_width
+    bottom = top + target_height
+
+    # 4. Perform the centered crop
+    cropped_img = resized_img.crop((left, top, right, bottom))
+
+    return cropped_img
 
 def drawTitleWidthCentered(img, title, font_name, font_size, y=20):
     draw = ImageDraw.Draw(img)
