@@ -2,43 +2,39 @@ import utils
 import colors
 
 # CONST PARAMETERS
-title = "UB REANIMATOR"
-left_card = utils.load_png_cached("https://cards.scryfall.io/png/front/3/c/3caa9c55-5e3b-436b-84a9-b7ccebf63799.png?1675199594")
-right_card = utils.load_png_cached("https://cards.scryfall.io/png/front/4/a/4a1f905f-1d55-4d02-9d24-e58070793d3f.png?1717951088")
-center_card = utils.load_png_cached("https://cards.scryfall.io/png/front/2/a/2a717b98-cdac-416d-bf6c-f6b6638e65d1.png?1748260594")
+title = "JESKAI CONTROL"
+left_card = utils.load_png_cached("https://cards.scryfall.io/png/front/c/8/c8817585-0d32-4d56-9142-0d29512e86a9.png?1598304029")
+right_card = utils.load_png_cached("https://cards.scryfall.io/png/front/e/5/e52caa08-34ae-4c74-83ad-008d17005576.png?1724104649")
+center_card = utils.load_png_cached("https://cards.scryfall.io/png/front/0/4/04779a7e-b453-48b9-b392-6d6fd0b8d283.png?1686969766")
 
-# BACKGROUND
-img = utils.create_radial_gradient_background(
-    width=1280,
-    height=720,
-    color_center=colors.GRAY_DARK,
-    color_edge=colors.BLUE_DARK
-)
-
-img = utils.create_gradient_background(
-    width=1280,
-    height=720,
-    color_start=colors.GRAY_DARK,
-    color_end=colors.BLUE_DARK
-)
-
-img = utils.load_img("bg/blue_black.jpg")
+img = utils.load_img("bg/blue_white.jpg")
 img = utils.resize_and_crop_to_fit(img, 1280, 720)
 
 # ADDING cards
 center_x, center_y = utils.get_center_image_position(img.width, img.height, 619, 750)
 
-img = utils.add_card(img, left_card, 750, center_x-350, center_y+150, border_size=0, radius=0, rotate_angle=15)
-img = utils.add_card(img, right_card, 750, center_x+350, center_y+150, border_size=0, radius=0, rotate_angle=-15)
-# img = utils.add_card(img, center_card, 750, center_x, center_y+150, border_size=0, radius=0, rotate_angle=0)
-# tamiyo specific
-img = utils.add_card(img, center_card, 750, center_x+50, center_y+150, border_size=0, radius=0, rotate_angle=0)
+img = utils.add_card(img, left_card, 750, center_x-350, center_y+250, border_size=0, radius=0, rotate_angle=15)
+img = utils.add_card(img, right_card, 750, center_x+350, center_y+250, border_size=0, radius=0, rotate_angle=-15)
+img = utils.add_card(img, center_card, 750, center_x, center_y+250, border_size=0, radius=0, rotate_angle=0)
+# bigger card specific
+# img = utils.add_card(img, center_card, 750, center_x+50, center_y+150, border_size=0, radius=0, rotate_angle=0)
 
 
 # ADD TITLE
-img = utils.drawTitleWidthCentered(img, title, "Goudy_Mediaeval_DemiBold", 120, y=20)
+img = utils.drawTitleWidthCentered(
+    img,
+    title,
+    "Goudy_Mediaeval_DemiBold",
+    140,
+    y=40,
+    text_color=colors.WHITE_MTG,
+    border_color=colors.BLACK,
+    border_width=6
+)
 
 
-## RESULT
 img.show()
+
+rgb_img = img.convert('RGB')
+rgb_img.save("presentation_thumbnail.jpg", 'JPEG', quality=95)
 

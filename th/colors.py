@@ -1,5 +1,9 @@
 # --- PRIMARY & SECONDARY COLORS ---
 
+WHITE = (255, 255, 255)
+WHITE_MTG = (248, 231, 185)
+BLACK = (0, 0, 0)
+
 # Red Gradient
 RED_DARK = (150, 0, 0)
 RED_LIGHT = (255, 100, 100)

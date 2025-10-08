@@ -208,19 +208,23 @@ def resize_and_crop_to_fit(img, target_width, target_height):
 
     return cropped_img
 
-def drawTitleWidthCentered(img, title, font_name, font_size, y=20):
+def drawTitleWidthCentered(
+        img, 
+        title,
+        font_name, 
+        font_size, 
+        y=20,
+        text_color=(255, 255, 255),
+        border_color=(0, 0, 0),
+        border_width=4
+    ):
     draw = ImageDraw.Draw(img)
 
     font_path = "fonts/" + font_name + ".ttf"  # Adjust for your system
     font = ImageFont.truetype(font_path, font_size)
 
-    # define the text
-    text_color = (255, 255, 255)   # White
-    stroke_color = (0, 0, 0)       # Black border
-    stroke_width = 4
-
     # Calculate text size using textbbox
-    bbox = draw.textbbox((0, 0), title, font=font, stroke_width=stroke_width)
+    bbox = draw.textbbox((0, 0), title, font=font, stroke_width=border_width)
     text_w = bbox[2] - bbox[0]
     # text_h = bbox[3] - bbox[1]
 
@@ -232,8 +236,8 @@ def drawTitleWidthCentered(img, title, font_name, font_size, y=20):
         title,
         font=font,
         fill=text_color,
-        stroke_width=stroke_width,
-        stroke_fill=stroke_color
+        stroke_width=border_width,
+        stroke_fill=border_color
     )
 
     return img
