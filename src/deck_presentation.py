@@ -2,12 +2,13 @@ import utils
 import colors
 
 # CONST PARAMETERS
-title = "JESKAI CONTROL"
-left_card = utils.load_png_cached("https://cards.scryfall.io/png/front/c/8/c8817585-0d32-4d56-9142-0d29512e86a9.png?1598304029")
-right_card = utils.load_png_cached("https://cards.scryfall.io/png/front/e/5/e52caa08-34ae-4c74-83ad-008d17005576.png?1724104649")
-center_card = utils.load_png_cached("https://cards.scryfall.io/png/front/0/4/04779a7e-b453-48b9-b392-6d6fd0b8d283.png?1686969766")
+title = "OMNITELL"
+title_size = 160
+left_card = utils.load_png_cached("https://cards.scryfall.io/png/front/c/a/ca097675-5e82-493d-beab-9fc11efd7492.png?1562631972")
+right_card = utils.load_png_cached("https://cards.scryfall.io/png/front/d/3/d33d91d0-1506-45e4-9def-975bf901815e.png?1731652624")
+center_card = utils.load_png_cached("https://cards.scryfall.io/png/front/4/b/4b851c17-55ed-4671-b471-dc7b34944432.png?1667109583")
+img = utils.load_img("bg/blue.jpg")
 
-img = utils.load_img("bg/blue_white.jpg")
 img = utils.resize_and_crop_to_fit(img, 1280, 720)
 
 # ADDING cards
@@ -25,9 +26,9 @@ img = utils.drawTitleWidthCentered(
     img,
     title,
     "Goudy_Mediaeval_DemiBold",
-    140,
+    title_size,
     y=40,
-    text_color=colors.WHITE_MTG,
+    text_color=colors.WHITE,
     border_color=colors.BLACK,
     border_width=6
 )
