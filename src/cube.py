@@ -1,4 +1,4 @@
-import utils
+import src.utils_image as utils_image
 
 # VARIABLE METADATA
 
@@ -10,17 +10,17 @@ bg_url = "https://cards.scryfall.io/art_crop/front/e/b/eb6d8d1c-8d23-4273-9c9b-f
 
 
 
-bg = utils.load_png_cached(bg_url)
+bg = utils_image.load_png_cached(bg_url)
 
-bg_resized, new_height = utils.resizeOnlyWidth(bg, 1280)
-bg_resized_cropped = utils.crop_height_centered(bg_resized, 720)
+bg_resized, new_height = utils_image.resizeOnlyWidth(bg, 1280)
+bg_resized_cropped = utils_image.crop_height_centered(bg_resized, 720)
 
 
 
 cw = 500
 
 
-utils.drawTitleWidthCentered(bg_resized_cropped, title, "impact", title_size, y=80)
+utils_image.drawTitleWidthCentered(bg_resized_cropped, title, "impact", title_size, y=80)
 
 
 

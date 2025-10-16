@@ -1,4 +1,4 @@
-import utils
+import src.utils_image as utils_image
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 import os
 import requests
@@ -15,10 +15,10 @@ bg_url = "https://img.youtube.com/vi/qDviNHE8qX8/sddefault.jpg"
 image_reaction = "me-wtf-1280.png"
 
 
-bg = utils.load_png_cached(bg_url)
-bg_resized, new_height = utils.resizeOnlyWidth(bg, 1280)
-bg_resized_cropped = utils.crop_height_centered(bg_resized, 720)
-reaction = utils.load_png_reaction(image_reaction, border_size=15)
+bg = utils_image.load_png_cached(bg_url)
+bg_resized, new_height = utils_image.resizeOnlyWidth(bg, 1280)
+bg_resized_cropped = utils_image.crop_height_centered(bg_resized, 720)
+reaction = utils_image.load_png_reaction(image_reaction, border_size=15)
 reaction = reaction.resize((1100,1100))
 
 # cw = 500
