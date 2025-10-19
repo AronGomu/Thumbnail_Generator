@@ -211,6 +211,7 @@ def resize_and_crop_to_fit(img, target_width, target_height):
 def drawTitleCentered(img, title, font_name, font_size, y=20, text_color=(255, 255, 255), border_color=(0, 0, 0), border_width=4):
     draw = ImageDraw.Draw(img)
 
+    
     font_path = "fonts/" + font_name + ".ttf"  # Adjust for your system
     font = ImageFont.truetype(font_path, font_size)
 

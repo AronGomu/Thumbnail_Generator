@@ -1,18 +1,15 @@
-[project]
-name = "mtgones"
+[tool.poetry]
+name = "thumbnail_generator"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "AronGomu"}
-]
+authors = ["AronGomu <aron@example.com>"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "pillow (>=11.3.0,<12.0.0)",
-    "requests (>=2.32.3,<3.0.0)"
-]
 package-mode = false
 
+[tool.poetry.dependencies]
+python = ">=3.12"
+pillow = ">=11.3.0,<12.0.0"
+requests = ">=2.32.3,<3.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
