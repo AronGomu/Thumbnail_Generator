@@ -12,7 +12,7 @@ img = utils_image.crop_height_centered(img, 720)
 img = utils_image.blur_image(img, radius=5)
 img = utils_image.darken_image(img, 0.4)
 
-utils_image.drawTitleWidthCentered(
+utils_image.drawTitleCentered(
     img, title, "OpenSans-Regular", title_size, y=200, text_color=(colors.BLUE_LIGHT), border_width=2
 )
 

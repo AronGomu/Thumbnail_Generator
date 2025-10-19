@@ -27,11 +27,11 @@ img = utils_image.crop_height_centered(img, 720)
 img = utils_image.blur_image(img, radius=2)
 img = utils_image.darken_image(img, 0.6)
 
-utils_image.drawTitleWidthCentered(
+utils_image.drawTitleCentered(
 	img, t, font, t_size, t_y, t_color, t_b_color, t_b_width, 
 )
 
-utils_image.drawTitleWidthCentered(
+utils_image.drawTitleCentered(
 	img, t2, font, t2_size, t2_y, t2_color, t2_b_color, t2_b_width, 
 )
 

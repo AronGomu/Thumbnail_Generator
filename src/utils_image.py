@@ -208,39 +208,51 @@ def resize_and_crop_to_fit(img, target_width, target_height):
 
     return cropped_img
 
-def drawTitleWidthCentered(
-        img, 
-        title,
-        font_name, 
-        font_size, 
-        y=20,
-        text_color=(255, 255, 255),
-        border_color=(0, 0, 0),
-        border_width=4
-    ):
+def drawTitleCentered(img, title, font_name, font_size, y=20, text_color=(255, 255, 255), border_color=(0, 0, 0), border_width=4):
     draw = ImageDraw.Draw(img)
 
     font_path = "fonts/" + font_name + ".ttf"  # Adjust for your system
     font = ImageFont.truetype(font_path, font_size)
 
-    # Calculate text size using textbbox
     bbox = draw.textbbox((0, 0), title, font=font, stroke_width=border_width)
     text_w = bbox[2] - bbox[0]
-    # text_h = bbox[3] - bbox[1]
 
-    # Center the text
     x = (img.width - text_w) // 2
 
-    draw.text(
-        (x, y),
-        title,
-        font=font,
-        fill=text_color,
-        stroke_width=border_width,
-        stroke_fill=border_color
-    )
-
+    draw.text( (x, y), title, font=font, fill=text_color, stroke_width=border_width, stroke_fill=border_color)
     return img
+
+def drawTitleCenteredAutoSized(img, title, font_name, y=20, margin_x=50, text_color=(255, 255, 255), border_color=(0, 0, 0), border_width=4):
+    max_text_width = img.width - (2 * margin_x)
+    current_size = 10
+    optimal_size = current_size
+
+    font_path = "fonts/" + font_name + ".ttf"
+    draw = ImageDraw.Draw(img)
+
+    while True:
+        try:
+            font = ImageFont.truetype(font_path, current_size)
+        except IOError:
+            font = ImageFont.load_default()
+            print("Warning: Custom font not found. Auto-sizing stopped.")
+            optimal_size = current_size
+            break
+
+        bbox = draw.textbbox((0, 0), title, font=font, stroke_width=border_width)
+        text_w = bbox[2] - bbox[0]
+        
+        if text_w > max_text_width:
+            break
+        
+        optimal_size = current_size
+        current_size += 2
+
+    print(f"Optimal font size calculated: {optimal_size}")
+    
+    return drawTitleCentered(
+        img, title, font_name, optimal_size, y, text_color, border_color, border_width
+    )
 
 def drawText(img, text, font_name, font_size, x=20, y=20):
     draw = ImageDraw.Draw(img)
