@@ -7,7 +7,7 @@ from io import BytesIO
 import urllib.parse
 
 
-def load_png_reaction(reaction_filename, border_size=11, img_width=800, img_height=800, reaction_dir="reactions"):
+def load_png_reaction(reaction_filename, border_size=11, reaction_dir="reactions"):
     os.makedirs(reaction_dir, exist_ok=True)
 
     file_path = os.path.join(reaction_dir, reaction_filename)
@@ -23,7 +23,6 @@ def load_png_reaction(reaction_filename, border_size=11, img_width=800, img_heig
         mask = alpha.point(lambda p: 255 if p > 0 else 0)
 
         # Slightly blur the alpha mask and then convert to border
-        border_width = 10
         border_mask = mask.filter(ImageFilter.MaxFilter(border_size))
 
         border_color = (0, 0, 0, 255)
@@ -38,7 +37,7 @@ def load_png_reaction(reaction_filename, border_size=11, img_width=800, img_heig
         print("Reaction Filename not found !")
 
 # FUNCTIONS
-def load_png_cached(url, cache_dir="cache", filename=None):
+def load_png_url(url, cache_dir="cache", filename=None):
     # Ensure the cache folder exists
     os.makedirs(cache_dir, exist_ok=True)
 
@@ -51,7 +50,7 @@ def load_png_cached(url, cache_dir="cache", filename=None):
     # If file already exists, load from disk
     if os.path.exists(file_path):
         print(f"Loading cached image: {file_path}")
-        return Image.open(file_path).convert("RGBA")
+        return Image.open(file_path).convert("RGBA"), file_path
 
     # Download the image
     print(f"Downloading image from: {url}")
@@ -65,9 +64,10 @@ def load_png_cached(url, cache_dir="cache", filename=None):
 
     # Load as RGBA
     img = Image.open(file_path).convert("RGBA")
-    return img
+    print(f"Saved: {file_path}")
+    return img, file_path
 
-def load_img(file_path: str):
+def load_png_local(file_path: str):
     if os.path.exists(file_path):
         print(f"Loading cached image: {file_path}")
         return Image.open(file_path).convert("RGBA")
@@ -378,7 +378,7 @@ def fetch_avatar_from_video(video_url, api_key, cache_dir="cache"):
     avatar_url = thumbnails.get("high", thumbnails.get("default"))["url"]
 
     # Download and cache avatar image
-    return load_png_cached(avatar_url, cache_dir, filename=f"{channel_id}.png")
+    return load_png_url(avatar_url, cache_dir, filename=f"{channel_id}.png")
 
 
 def create_gradient_background(width, height, color_start, color_end, direction='horizontal', noise_intensity=0, noise_density=0):

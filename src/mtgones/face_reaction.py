@@ -15,7 +15,7 @@ bg_url = "https://img.youtube.com/vi/qDviNHE8qX8/sddefault.jpg"
 image_reaction = "me-wtf-1280.png"
 
 
-bg = utils_image.load_png_cached(bg_url)
+bg = utils_image.load_png_url(bg_url)
 bg_resized, new_height = utils_image.resizeOnlyWidth(bg, 1280)
 bg_resized_cropped = utils_image.crop_height_centered(bg_resized, 720)
 reaction = utils_image.load_png_reaction(image_reaction, border_size=15)

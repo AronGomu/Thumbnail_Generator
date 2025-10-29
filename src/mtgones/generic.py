@@ -1,12 +1,13 @@
 from .. import utils
 from .. import colors
 from ..import utils_image
+from .. import fonts
 
-bg_url = "https://cards.scryfall.io/art_crop/front/0/9/0982ea7e-05a4-4e40-98ab-ea9aa6c7342e.jpg?1592708421"
+bg_url = "https://cards.scryfall.io/art_crop/front/3/8/3899605d-2203-4ab6-9ff5-69490382eea4.jpg?1561966876"
 
-font = "Impact"
+font = fonts.fonts['medieval']
 
-c = "COMMENT ?"
+c = "PAUPER"
 c_y = 200
 c_color = colors.WHITE
 c_b_width = 4
@@ -27,11 +28,11 @@ c_b_color = colors.BLACK
 # t2_b_color = colors.BLUE_LIGHT
 
 
-img = utils_image.load_png_cached(bg_url)
+img, _ = utils_image.load_png_url(bg_url)
 img, new_height = utils_image.resizeOnlyWidth(img, 1280)
 img = utils_image.crop_height_centered(img, 720)
 img = utils_image.blur_image(img, radius=2)
-img = utils_image.darken_image(img, 0.6)
+img = utils_image.darken_image(img, 0.8)
 
 utils_image.drawTitleCenteredAutoSized(
     img=img,
