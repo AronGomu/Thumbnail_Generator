@@ -2,12 +2,12 @@ from .. import utils_image
 from .. import colors
 
 # CONST PARAMETERS
-title = "BLUE TERROR"
+title = "AFFINITY"
 # title_size = 100
-left_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/6/9/6904ea20-e504-47da-95a0-08739fdde260.png?1736467707")
-right_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/4/f/4f616706-ec97-4923-bb1e-11a69fbaa1f8.png?1751282477")
-center_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/2/5/2569d4f3-55ed-4f99-9592-34c7df0aab72.png?1730489226")
-img = utils_image.load_png_local("bg/blue.jpg")
+left_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/0/c/0cf8cb1e-314a-4894-82df-f9812825f52e.png?1599706326")
+right_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/4/6/466a0be8-31b9-4ea0-9a96-b09a76f4ec69.png?1682208952")
+center_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/d/f/dff51ae7-4b68-4770-915b-fb6bcf9ca1ed.png?1562268373")
+img = utils_image.load_png_local("bg/colorless.jpg")
 
 img = utils_image.resize_and_crop_to_fit(img, 1280, 720)
 

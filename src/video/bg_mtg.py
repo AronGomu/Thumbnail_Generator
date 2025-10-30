@@ -8,13 +8,12 @@ url_list_to_load = [
       "https://cards.scryfall.io/art_crop/front/3/4/3462a3d0-5552-49fa-9eb7-100960c55891.jpg?1650599698",
       "https://cards.scryfall.io/art_crop/front/c/f/cfdb1c47-14be-491f-88b3-bed03489dbc5.jpg?1702429617",
       "https://cards.scryfall.io/art_crop/front/5/a/5ad36fb2-c44e-4085-ba0d-54277841ad3a.jpg?1682228556",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
+      "https://cards.scryfall.io/art_crop/front/7/e/7ef67487-c8e5-49bb-b0f7-e073ff2e31f1.jpg?1562642427",
+      "https://cards.scryfall.io/art_crop/front/2/6/2680ed41-da35-475a-9d80-ae2f4686feed.jpg?1707764737",
+      "https://cards.scryfall.io/art_crop/front/a/9/a9738cda-adb1-47fb-9f4c-ecd930228c4d.jpg?1681963138",
+      "https://cards.scryfall.io/art_crop/front/9/4/94b67489-5eb0-4406-9bf3-27e50dc632eb.jpg?1731574759",
+      "https://cards.scryfall.io/art_crop/front/0/0/0049e68d-0caf-474f-9523-dad343f1250a.jpg?1748271676",
+      "https://cards.scryfall.io/art_crop/front/c/4/c43aeb5a-8bdc-4aa9-89d1-156f97ac38aa.jpg?1743206665",
 ]
 
 image_path_list = []
