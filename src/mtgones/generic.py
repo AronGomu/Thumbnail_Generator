@@ -3,12 +3,12 @@ from .. import colors
 from ..import utils_image
 from .. import fonts
 
-bg_url = "https://cards.scryfall.io/art_crop/front/3/8/3899605d-2203-4ab6-9ff5-69490382eea4.jpg?1561966876"
+bg_url = "https://cards.scryfall.io/art_crop/front/2/0/2073ca8b-2bca-4539-94d7-989da157e4b8.jpg?1562445694"
 
 font = fonts.fonts['medieval']
 
-c = "PAUPER"
-c_y = 200
+c = "PREMODERN"
+c_y = 250
 c_color = colors.WHITE
 c_b_width = 4
 c_b_color = colors.BLACK
@@ -56,6 +56,7 @@ utils_image.drawTitleCenteredAutoSized(
 output_path = "./output/mtgones.png"
 utils.ensure_directory_exists_for_file(output_path)
 
+img.show()
 img.save(output_path, quality=95)
 print("Image saved : ./output/mtgones.png")
-# img.show()
+

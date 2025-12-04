@@ -543,3 +543,57 @@ def darken_image(img, factor=0.7):
 
 def blur_image(img, radius=2):
     return img.filter(ImageFilter.GaussianBlur(radius))
+
+
+def compose_images(image_paths, layout, output_path, padding=10):
+    """
+    Compose 2–9 images into multiple centered lines.
+
+    Parameters:
+        image_paths (list[str]): Paths to the images (2–9), all same size.
+        layout (list[int]): List specifying how many images go on each line.
+                            Example: [3, 2] means 3 images on line 1, 2 on line 2.
+        output_path (str): Output file path (PNG recommended).
+        padding (int): Space between images and between lines.
+    """
+
+    num_images = len(image_paths)
+    if num_images < 2 or num_images > 9:
+        raise ValueError("You must provide between 2 and 9 images.")
+
+    if sum(layout) != num_images:
+        raise ValueError("Layout counts must match number of images.")
+
+    # Load all images (RGBA for transparency support)
+    imgs = [Image.open(p).convert("RGBA") for p in image_paths]
+    w, h = imgs[0].size  # all images same size
+
+    # Determine total canvas size
+    max_images_per_line = max(layout)
+    canvas_width = max_images_per_line * w + (max_images_per_line - 1) * padding
+    canvas_height = len(layout) * h + (len(layout) - 1) * padding
+
+    # Create transparent output image
+    canvas = Image.new("RGBA", (canvas_width, canvas_height), (0, 0, 0, 0))
+
+    # Paste images line by line
+    index = 0
+    y_offset = 0
+
+    for line_count in layout:
+        # horizontal free space to center the line
+        used_width = line_count * w + (line_count - 1) * padding
+        x_offset = (canvas_width - used_width) // 2
+
+        # paste images in this line
+        for _ in range(line_count):
+            canvas.paste(imgs[index], (x_offset, y_offset), imgs[index])
+            x_offset += w + padding
+            index += 1
+
+        # go to next line
+        y_offset += h + padding
+
+    # Save output
+    canvas.save(output_path, "PNG")
+    return canvas

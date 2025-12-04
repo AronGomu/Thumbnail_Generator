@@ -2,12 +2,13 @@ from .. import utils_image
 from .. import colors
 
 # CONST PARAMETERS
-title = "AFFINITY"
+title = "OATH PONZA"
 # title_size = 100
-left_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/0/c/0cf8cb1e-314a-4894-82df-f9812825f52e.png?1599706326")
-right_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/4/6/466a0be8-31b9-4ea0-9a96-b09a76f4ec69.png?1682208952")
-center_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/d/f/dff51ae7-4b68-4770-915b-fb6bcf9ca1ed.png?1562268373")
-img = utils_image.load_png_local("bg/colorless.jpg")
+left_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/7/4/74e907ed-76f7-476c-b128-bb6bfd892e06.png?1562869061")
+right_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/c/3/c39c412b-2f21-483a-b744-5d55bc007c0d.png?1562931563")
+center_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/c/f/cf14de50-d123-400c-862e-2c95fd2aa23f.png?1562088805")
+img = utils_image.load_png_local("bg/green.jpg")
+y = 40
 
 img = utils_image.resize_and_crop_to_fit(img, 1280, 720)
 
@@ -37,7 +38,7 @@ img = utils_image.drawTitleCenteredAutoSized(
     img=img,
     title=title,
     font_name="Goudy_Mediaeval_DemiBold",
-    y=0,
+    y=y,
     margin_x=50,
     text_color=colors.WHITE,
     border_color=colors.BLACK,
