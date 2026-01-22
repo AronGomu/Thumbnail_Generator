@@ -1,10 +1,10 @@
 from .. import utils_image
 
-one_url = "https://cards.scryfall.io/png/front/8/d/8de3fdae-cc2c-4a14-b15b-4fe1a983dfbf.png?1562924943"
-two_url = "https://cards.scryfall.io/png/front/8/9/89f612d6-7c59-4a7b-a87d-45f789e88ba5.png?1753711891"
-three_url = "https://cards.scryfall.io/png/front/2/6/26cee543-6eab-494e-a803-33a5d48d7d74.png?1562902883"
-for_url = "https://cards.scryfall.io/png/front/7/9/79f627d8-8ca5-4b28-a8b6-edf14bb0b0b0.png?1630270330"
-five_url = "https://cards.scryfall.io/png/front/6/e/6e9fec20-a52c-42c0-9928-c572d9e1b21f.png?1675201251"
+one_url = "https://cards.scryfall.io/png/front/a/3/a305e44f-4253-4754-b83f-1e34103d77b0.png?1764122074"
+two_url = "https://cards.scryfall.io/png/front/f/0/f0b234d8-d6bb-48ec-8a4d-d8a570a69c62.png?1764122062"
+three_url = "https://cards.scryfall.io/png/front/f/9/f98a7264-0a83-42c8-a94d-05ad4c234242.png?1730491182"
+for_url = "https://cards.scryfall.io/png/front/3/a/3ab6c240-c97d-4a5c-bc39-860c2d9901c2.png?1730491210"
+five_url = "https://cards.scryfall.io/png/front/f/9/f9b8a159-5e58-4432-8ecd-62f39afa96da.png?1730491202"
 six_url = "https://cards.scryfall.io/png/front/6/e/6e9fec20-a52c-42c0-9928-c572d9e1b21f.png?1675201251"
 seven_url = "https://cards.scryfall.io/png/front/6/e/6e9fec20-a52c-42c0-9928-c572d9e1b21f.png?1675201251"
 height_url = "https://cards.scryfall.io/png/front/6/e/6e9fec20-a52c-42c0-9928-c572d9e1b21f.png?1675201251"

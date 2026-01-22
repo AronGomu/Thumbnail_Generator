@@ -1,14 +1,16 @@
 from .. import utils_image
 from .. import colors
 
+
 # CONST PARAMETERS
-title = "OATH PONZA"
+bg = 
+title = "UW CONTROL"
 # title_size = 100
-left_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/7/4/74e907ed-76f7-476c-b128-bb6bfd892e06.png?1562869061")
-right_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/c/3/c39c412b-2f21-483a-b744-5d55bc007c0d.png?1562931563")
-center_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/c/f/cf14de50-d123-400c-862e-2c95fd2aa23f.png?1562088805")
-img = utils_image.load_png_local("bg/green.jpg")
-y = 40
+left_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/a/2/a2788d69-6a3a-42f0-8736-cc6b57755ecd.png?1559591620")
+right_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/2/1/21637fbe-d9d3-4d5b-a361-0687385d4738.png?1717013537")
+center_card, _ = utils_image.load_png_url("https://cards.scryfall.io/png/front/3/e/3ede3f6f-e642-4fe4-aa37-0f01cdf4d149.png?1562906537")
+img = utils_image.load_png_local("bg/blue_white.jpg")
+y = 20
 
 img = utils_image.resize_and_crop_to_fit(img, 1280, 720)
 

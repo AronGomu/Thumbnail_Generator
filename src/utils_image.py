@@ -255,25 +255,22 @@ def drawTitleCenteredAutoSized(img, title, font_name, y=20, margin_x=50, text_co
         img, title, font_name, optimal_size, y, text_color, border_color, border_width
     )
 
-def drawText(img, text, font_name, font_size, x=20, y=20):
+def drawText(img, text, font_name, font_size, x=20, y=20, text_color=(255, 255, 255), border_color=(0, 0, 0), border_width=4):
     draw = ImageDraw.Draw(img)
 
-    font_path = "C:/Windows/Fonts/" + font_name + ".ttf"  # Adjust for your system
+    font_path = "fonts/" + font_name + ".ttf"  # Adjust for your system
     font = ImageFont.truetype(font_path, font_size)
-
-    # define the text
-    text_color = (255, 255, 255)   # White
-    stroke_color = (0, 0, 0)       # Black border
-    stroke_width = 4
 
     draw.text(
         (x, y),
         text,
         font=font,
         fill=text_color,
-        stroke_width=stroke_width,
-        stroke_fill=stroke_color
+        stroke_width=border_width,
+        stroke_fill=border_color
     )
+
+    return img
 
 def add_card(base, card, height, x, y, border_size=4, radius=12, rotate_angle=0):
     # --- 1. PREP & ROTATION (Correct) ---
@@ -288,6 +285,38 @@ def add_card(base, card, height, x, y, border_size=4, radius=12, rotate_angle=0)
 
     # --- 2. RESIZING (Correct) ---
     card_resized, new_width = resizeOnlyHeight(card, height)
+    
+    # --- 3. CONDITIONAL BORDER LOGIC (The crucial fix) ---
+    if border_size > 0 or radius > 0:
+        # If any border is requested, use the corrected, transparent border function
+        # This will clip the rotated image to the rounded/square border boundary.
+        card_final = add_rounded_border(card_resized, border_size, (255, 255, 255), radius)
+    else:
+        # If NO border is requested (border_size=0, radius=0), use the resized image directly.
+        # This preserves the transparent corners created by the rotation.
+        card_final = card_resized
+
+    print(f"width={card_final.width}, height={card_final.height}")
+    
+    # --- 4. PASTE ---
+    # The final card (with or without border) is pasted using its alpha channel as a mask.
+    base.paste(card_final, (x, y), card_final)
+    
+    return base
+
+def add_card_width(base, card, width, x, y, border_size=4, radius=12, rotate_angle=0):
+    # --- 1. PREP & ROTATION (Correct) ---
+    card = card.convert("RGBA")
+    
+    if rotate_angle != 0:
+        card = card.rotate(
+            rotate_angle, 
+            expand=True,
+            fillcolor=(0, 0, 0, 0) # Fills expanded corners with transparent black
+        )
+
+    # --- 2. RESIZING (Correct) ---
+    card_resized, new_width = resizeOnlyWidth(card, width)
     
     # --- 3. CONDITIONAL BORDER LOGIC (The crucial fix) ---
     if border_size > 0 or radius > 0:
