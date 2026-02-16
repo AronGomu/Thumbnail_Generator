@@ -41,6 +41,7 @@ if format == "PREMODERN": format = utils_image.load_png_local("assets/button_pre
 if format == "PAUPER": format = utils_image.load_png_local("assets/button_pauper.png")
 if format == "VINTAGE": format = utils_image.load_png_local("assets/button_vintage.png")
 if format == "CUBE": format = utils_image.load_png_local("assets/button_cube.png")
+if format == "MODERN": format = utils_image.load_png_local("assets/button_modern.png")
 
 img.paste(format, (-5, 650), format)
 

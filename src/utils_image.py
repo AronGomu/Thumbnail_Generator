@@ -626,3 +626,39 @@ def compose_images(image_paths, layout, output_path, padding=10):
     # Save output
     canvas.save(output_path, "PNG")
     return canvas
+
+
+def pixelate_and_posterize(
+    image_path: str,
+    pixel_size: int = 12,
+    posterize_levels: int = 6,
+    output_path: str = None,
+    save: bool = True
+) -> Image.Image:
+    """
+    Creates a pixelated + posterized version of an image.
+    
+    Args:
+        image_path: path to input image
+        pixel_size: size of each "big pixel" (higher = more pixelated)   (default: 12)
+        posterize_levels: number of color levels per channel (2–8 usual)  (default: 6)
+        output_path: where to save result (if None → same folder + "_pixelposter")
+        save: whether to automatically save the result
+    
+    Returns:
+        PIL.Image object with the processed result
+    """
+    # Open image and convert to RGB (removes alpha if present)
+    img = Image.open(image_path).convert("RGB")
+    
+    # 1. Pixelation (downscale → upscale with nearest neighbor)
+    small_w = max(1, img.width // pixel_size)
+    small_h = max(1, img.height // pixel_size)
+    
+    small = img.resize((small_w, small_h), resample=Image.NEAREST)
+    pixelated = small.resize(img.size, resample=Image.NEAREST)
+    
+    # 2. Posterization
+    posterized = ImageOps.posterize(pixelated, bits=posterize_levels)
+    
+    return posterized
